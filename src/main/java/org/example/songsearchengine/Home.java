@@ -1,0 +1,34 @@
+package org.example.songsearchengine;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class Home extends Application {
+    @Override
+    public void start(Stage stage) throws IOException {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(Home.class.getResource("Home.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+
+            String css = String.valueOf(this.getClass().getResource("/org/example/songsearchengine/app.css"));
+            scene.getStylesheets().add(css);
+
+            stage.setTitle("Song Search Engine");
+            stage.setResizable(false);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+}
