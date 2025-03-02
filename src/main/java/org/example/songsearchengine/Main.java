@@ -7,11 +7,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Home extends Application {
+public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try{
-            FXMLLoader fxmlLoader = new FXMLLoader(Home.class.getResource("Home.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Home.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
 
             String css = String.valueOf(this.getClass().getResource("/org/example/songsearchengine/app.css"));
@@ -25,7 +25,6 @@ public class Home extends Application {
         } catch (Exception e){
             throw new RuntimeException(e);
         }
-
     }
 
     public static void main(String[] args) {

@@ -1,17 +1,13 @@
-#scene {
+#root {
   -fx-background-color: #588157;
 }
 
 #searchbar {
   -fx-fill: #3a5a40;
-  width:100%;
-  max-height: 120px;
 }
 
 #navbar {
   -fx-fill: #344e41;
-  height: 100%;
-  max-width: 340px;
 }
 
 #searchbar, #navbar{

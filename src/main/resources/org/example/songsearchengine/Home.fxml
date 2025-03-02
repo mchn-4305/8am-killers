@@ -1,12 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="scene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.songsearchengine.SceneController">
    <children>
       <Rectangle fx:id="navbar" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="713.0" layoutY="89.0" stroke="BLACK" strokeType="INSIDE" width="198.0" />
       <Rectangle fx:id="searchbar" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="89.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1280.0" />
+      <Button fx:id="playlistBtn" layoutX="29.0" layoutY="116.0" mnemonicParsing="false" onAction="#switchToPlaylistView" prefHeight="25.0" prefWidth="139.0" text="Liked Songs">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="29.0" layoutY="176.0" text="My Playlists" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="242.0" layoutY="109.0" text="Top artists" textFill="WHITE">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label layoutX="242.0" layoutY="288.0" text="Top albums" textFill="WHITE">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label layoutX="242.0" layoutY="483.0" text="Top songs" textFill="WHITE">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Button fx:id="homeBtn" layoutX="29.0" layoutY="15.0" mnemonicParsing="false" onAction="#switchToHome" prefHeight="57.0" prefWidth="65.0" text="Home" />
+      <TableView editable="true" layoutX="275.0" layoutY="152.0" prefHeight="135.0" prefWidth="943.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <TableView editable="true" layoutX="275.0" layoutY="341.0" prefHeight="135.0" prefWidth="943.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="C1" />
+            <TableColumn prefWidth="75.0" text="C2" />
+         </columns>
+      </TableView>
+      <TableView editable="true" layoutX="275.0" layoutY="540.0" prefHeight="135.0" prefWidth="943.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="C1" />
+            <TableColumn prefWidth="75.0" text="C2" />
+         </columns>
+      </TableView>
+      <TextField fx:id="searchField" layoutX="487.0" layoutY="23.0" prefHeight="43.0" prefWidth="519.0" />
    </children>
 </AnchorPane>
