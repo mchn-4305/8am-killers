@@ -11,5 +11,5 @@ public class Query {
     private static final String DB_USER = "8amkillers";
     private static final String DB_PASSWORD = "eightamkillers";
 
-
+    
 }
