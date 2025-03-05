@@ -1,10 +1,8 @@
 package org.example.songsearchengine;
 
 import org.mindrot.jbcrypt.BCrypt;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,12 +65,13 @@ public class Backend {
         List<String> results = new ArrayList<>();
 
         String sel = "select artist_id as id, name, 'Artists' as table_name from Artists where name like ?" +
-                "union" +
+                " union " +
                 "select album_id as id, album_name as name, 'Albums' as table_name from Albums where album_name like ?" +
-                "union" +
+                " union " +
                 "select song_id as id, song_name as name, 'Songs' as table_name from Songs where song_name like ?";
 
         try{
+            Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
 
