@@ -1,5 +1,4 @@
 package org.example.songsearchengine;
 
-public class Controller {
-
+public class PlaylistFormController extends SceneController{
 }

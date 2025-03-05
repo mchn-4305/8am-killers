@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.songsearchengine.SceneController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.songsearchengine.PlaylistViewController">
    <children>
       <Rectangle fx:id="navbar" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="713.0" layoutY="89.0" stroke="BLACK" strokeType="INSIDE" width="198.0" />
       <Rectangle fx:id="searchbar" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="89.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1280.0" />
@@ -28,5 +28,10 @@
             <Font size="26.0" />
          </font>
       </Label>
+      <Button fx:id="createPlaylistBtn" layoutX="29.0" layoutY="208.0" mnemonicParsing="false" onAction="#switchToPlaylistForm" prefHeight="25.0" prefWidth="139.0" text="Create Playlist">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

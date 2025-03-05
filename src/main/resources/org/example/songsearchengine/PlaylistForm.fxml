@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.songsearchengine.SceneController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.songsearchengine.PlaylistFormController">
    <children>
       <Rectangle fx:id="navbar" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="713.0" layoutY="89.0" stroke="BLACK" strokeType="INSIDE" width="198.0" />
       <Rectangle fx:id="searchbar" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="89.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1280.0" />
@@ -23,10 +23,27 @@
       </Label>
       <Button fx:id="homeBtn" layoutX="29.0" layoutY="15.0" mnemonicParsing="false" onAction="#switchToHome" prefHeight="57.0" prefWidth="65.0" text="Home" />
       <TextField fx:id="searchField" layoutX="487.0" layoutY="23.0" prefHeight="43.0" prefWidth="519.0" />
-      <Label layoutX="218.0" layoutY="112.0" text="Liked Songs" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#344e41" height="354.0" layoutX="527.0" layoutY="223.0" stroke="BLACK" strokeType="INSIDE" width="440.0" />
+      <TextField fx:id="playlistNameField" layoutX="568.0" layoutY="316.0" prefHeight="25.0" prefWidth="357.0" promptText="Playlist Title">
          <font>
-            <Font size="26.0" />
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="playlistDescriptionField" layoutX="568.0" layoutY="400.0" prefHeight="25.0" prefWidth="357.0" promptText="Description (Optional)">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Label layoutX="662.0" layoutY="236.0" text="New Playlist" textFill="WHITE">
+         <font>
+            <Font size="32.0" />
          </font>
       </Label>
+      <Button fx:id="submitBtn" layoutX="711.0" layoutY="477.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="72.0" text="Submit" />
+      <Button fx:id="createPlaylistBtn" layoutX="29.0" layoutY="208.0" mnemonicParsing="false" onAction="#switchToPlaylistForm" prefHeight="25.0" prefWidth="139.0" text="Create Playlist">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

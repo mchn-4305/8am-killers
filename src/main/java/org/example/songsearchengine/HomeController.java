@@ -1,4 +1,5 @@
 package org.example.songsearchengine;
 
-public class HomeController {
+public class HomeController extends SceneController{
+
 }
