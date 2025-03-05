@@ -13,3 +13,31 @@
 #searchbar, #navbar{
   -fx-stroke: none;
 }
+
+.HomeButton {
+    -fx-background-color: #A3C090; /* Light green */
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-cursor: hand; /* Makes the cursor a pointer */
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.HomeButton:hover {
+    -fx-background-color: #6B8E23; /* Darker green */
+    -fx-text-fill: white;
+}
+
+.Songs_Button {
+    -fx-background-color: #DAD7CD;  /* Green background */
+    -fx-text-fill: black;            /* White text */
+    -fx-font-weight: bold;           /* Bold text */
+    -fx-padding: 10px 20px;          /* Padding around the text */
+    -fx-border-radius: 10px;         /* Rounded corners */
+    -fx-background-radius: 5px;     /* Rounded corners */
+    -fx-cursor: hand;               /* Hand cursor on hover */
+    -fx-effect: dropshadow(gaussian, black, 5, 0, 2, 2);  /* Subtle shadow */
+}
