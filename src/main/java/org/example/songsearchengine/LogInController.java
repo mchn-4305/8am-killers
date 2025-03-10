@@ -60,6 +60,7 @@ public class LogInController{
         String user = username.getText();
         String pw = password.getText();
         if(Backend.verifyLogin(user,pw)){
+            UserSession.setCurrentUser(user);
             try{
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Home.fxml"));
                 Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();

@@ -23,13 +23,8 @@
       </Label>
       <Button fx:id="homeBtn" layoutX="29.0" layoutY="15.0" mnemonicParsing="false" onAction="#switchToHome" prefHeight="57.0" prefWidth="65.0" text="Home" />
       <TextField fx:id="searchField" layoutX="487.0" layoutY="23.0" prefHeight="43.0" prefWidth="519.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#344e41" height="354.0" layoutX="527.0" layoutY="223.0" stroke="BLACK" strokeType="INSIDE" width="440.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#344e41" height="248.0" layoutX="527.0" layoutY="223.0" stroke="BLACK" strokeType="INSIDE" width="440.0" />
       <TextField fx:id="playlistNameField" layoutX="568.0" layoutY="316.0" prefHeight="25.0" prefWidth="357.0" promptText="Playlist Title">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="playlistDescriptionField" layoutX="568.0" layoutY="400.0" prefHeight="25.0" prefWidth="357.0" promptText="Description (Optional)">
          <font>
             <Font size="16.0" />
          </font>
@@ -39,7 +34,7 @@
             <Font size="32.0" />
          </font>
       </Label>
-      <Button fx:id="submitBtn" layoutX="711.0" layoutY="477.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="72.0" text="Submit" />
+      <Button fx:id="submitBtn" layoutX="711.0" layoutY="394.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="72.0" text="Submit" />
       <Button fx:id="createPlaylistBtn" layoutX="29.0" layoutY="208.0" mnemonicParsing="false" onAction="#switchToPlaylistForm" prefHeight="25.0" prefWidth="139.0" text="Create Playlist">
          <font>
             <Font size="14.0" />
