@@ -4,30 +4,24 @@ import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
 import javafx.animation.TranslateTransition;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.control.TextField;
 
-public class LogInController extends SceneController{
+public class LogInController{
     @FXML
     private VBox vbox;
+    @FXML
     private Parent fxml;
-
-    public void initialize(){
-        TranslateTransition t = new TranslateTransition(Duration.seconds(1),vbox);
-        t.setToX(vbox.getLayoutX()*20);
-        t.play();
-        t.setOnFinished((e)-> {
-            try{
-                fxml = FXMLLoader.load(getClass().getResource("SignIn.fxml"));
-                vbox.getChildren().clear();
-                vbox.getChildren().setAll(fxml);
-            }catch(IOException ex){
-
-            }
-        });
-    }
+    @FXML
+    private TextField username;
+    @FXML
+    private TextField password;
 
     @FXML
     private void open_signin(ActionEvent event){
@@ -40,7 +34,7 @@ public class LogInController extends SceneController{
                 vbox.getChildren().clear();
                 vbox.getChildren().setAll(fxml);
             }catch(IOException ex){
-
+                ex.printStackTrace();
             }
         });
     }
@@ -56,8 +50,30 @@ public class LogInController extends SceneController{
                 vbox.getChildren().clear();
                 vbox.getChildren().setAll(fxml);
             }catch(IOException ex){
-
+                ex.printStackTrace();
             }
         });
+    }
+
+    @FXML
+    private void login(ActionEvent event){
+        String user = username.getText();
+        String pw = password.getText();
+        if(Backend.verifyLogin(user,pw)){
+            try{
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Home.fxml"));
+                Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(fxmlLoader.load());
+
+                stage.setScene(scene);
+                stage.sizeToScene();
+                stage.show();
+
+            } catch (Exception e){
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("Wrong Login");
+        }
     }
 }

@@ -16,7 +16,6 @@ import java.util.TimerTask;
 public class SceneController {
     @FXML
     private TextField searchField;
-
     @FXML
     private ListView<String> searchResults;
 
