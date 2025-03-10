@@ -12,12 +12,12 @@ public class Backend {
     private static final String DB_PASSWORD = "eightamkillers";
 
 //    hashes passwords to be stored in DB for new users
-    public static String hashPassword(String pw){
+    private static String hashPassword(String pw){
         return BCrypt.hashpw(pw, BCrypt.gensalt(12));
     }
 
 //    checks passwords input by users with DB pw
-    public static boolean checkPassword(String pw, String hashedPw){
+    private static boolean checkPassword(String pw, String hashedPw){
         return BCrypt.checkpw(pw,hashedPw);
     }
 
@@ -25,6 +25,7 @@ public class Backend {
     public static void insertUser(String username, String enteredPw){
         String ins = "insert into Users (username, user_password) values (?, ?)";
         try{
+            Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(ins);
 
@@ -40,9 +41,10 @@ public class Backend {
 
 //    returns whether a user entered a valid username and/or password
     public static boolean verifyLogin(String username, String enteredPw){
-        String sel = "select user_password from users where username = ?";
+        String sel = "select user_password from Users where username = ?";
 
         try{
+            Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
 
@@ -93,6 +95,10 @@ public class Backend {
             throw new RuntimeException(e);
         }
         return results;
+    }
+
+    public static void insertPlaylist(String playlistTitle) {
+        
     }
 }
 
