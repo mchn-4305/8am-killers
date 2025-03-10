@@ -206,6 +206,105 @@ public class Backend {
         }
         return false;
     }
+
+    public static List<String> selectTop20Songs(){
+        String sel = """
+                select s.song_id, s.song_name, a.name as artist
+                from Songs s\s
+                inner join Artists a on s.artist_id = a.artist_id
+                inner join (
+                select s2.song_id
+                from Songs s2\s
+                inner join Playlist_Songs ps on s2.song_id = ps.song_id
+                group by s2.song_id
+                order by count(s2.song_id) desc
+                limit 20
+                ) temp2 on s.song_id = temp2.song_id""";
+
+        List<String> results = new ArrayList<>();
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            PreparedStatement ps = conn.prepareStatement(sel);
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String sid = rs.getString("song_id");
+                String sname = rs.getString("song_name");
+                String aname = rs.getString("artist");
+
+                results.add(sid + ": " + sname + " by " + aname);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public static List<String> selectTop20Artists(){
+        String sel = """
+                select a.name as artist
+                from Artists a
+                inner join Artist_Songs art_s on a.artist_id = art_s.artist_id
+                inner join (
+                select s.song_id
+                from Songs s
+                inner join Playlist_Songs ps on s.song_id = ps.song_id
+                group by s.song_id
+                order by count(s.song_id) desc
+                limit 20
+                ) temp on art_s.song_id = temp.song_id""";
+
+        List<String> results = new ArrayList<>();
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            PreparedStatement ps = conn.prepareStatement(sel);
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String aname = rs.getString("artist");
+                results.add(aname);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public static List<String> selectTop20Albums(){
+        String sel = """
+                select a.album_name as album
+                from Albums a
+                inner join Album_Songs alb_s on a.album_id = alb_s.album_id
+                inner join (
+                select s.song_id
+                from Songs s
+                inner join Playlist_Songs ps on s.song_id = ps.song_id
+                group by s.song_id
+                order by count(s.song_id) desc
+                limit 20
+                ) temp on alb_s.song_id = temp.song_id""";
+
+        List<String> results = new ArrayList<>();
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            PreparedStatement ps = conn.prepareStatement(sel);
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String aname = rs.getString("album");
+                results.add(aname);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return results;
+    }
 }
 
 
