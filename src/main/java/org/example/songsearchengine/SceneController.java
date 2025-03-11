@@ -80,4 +80,8 @@ public class SceneController {
     public void switchToPlaylistForm(ActionEvent event){
         switchScene(event, "PlaylistForm.fxml");
     }
+
+    public void switchToAlbum(ActionEvent event){
+        switchScene(event, "Album.fxml");
+    }
 }

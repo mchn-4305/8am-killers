@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@400..700&display=swap');
+
 #root {
   -fx-background-color: #588157;
 }
@@ -32,15 +33,30 @@
     -fx-text-fill: white;
 }
 
-.Songs_Button {
-    -fx-background-color: #DAD7CD;  /* Green background */
-    -fx-text-fill: black;            /* White text */
-    -fx-font-weight: bold;           /* Bold text */
-    -fx-padding: 10px 20px;          /* Padding around the text */
-    -fx-border-radius: 10px;         /* Rounded corners */
-    -fx-background-radius: 5px;     /* Rounded corners */
-    -fx-cursor: hand;               /* Hand cursor on hover */
-    -fx-effect: dropshadow(gaussian, black, 5, 0, 2, 2);  /* Subtle shadow */
+.circular-icon{
+-fx-background-color: #A3C090;
+    -fx-border-color:  #A3C090;
+    -fx-border-width: 3px;
+    -fx-border-radius: 80%;
+    -fx-background-radius: 50%;
+    -fx-padding: 5px;
+}
+
+.album-grid {
+    -fx-grid-lines-visible: true; /* Optional: shows grid lines */
+    -fx-border-radius: 10; /* Round corners */
+    -fx-border-width: 2; /* Border thickness */
+    -fx-padding: 10px;
+}
+
+/* Targeting even rows */
+.album-grid-light {
+    -fx-background-color: #3A5A40; /* A different shade for even rows */
+}
+
+/* Targeting odd rows */
+.album-grid-dark {
+    -fx-background-color: #344E41; /* Another shade for odd rows */
 }
 
 .Albums_Title {
@@ -54,6 +70,35 @@
     -fx-font-size: 18px;         /* Set the font size to a smaller value than the title */
     -fx-font-weight: normal;     /* Make the font weight normal (not bold) */
     -fx-opacity: 0.7;            /* Optional: make the subtitle slightly transparent */
+}
+
+.Next_Button{
+  -fx-background-color: #344E41; /* Background color */
+  -fx-background-radius: 200px; /* Rounded corners */
+  -fx-effect: dropshadow(gaussian, #3A5A40, 5, 0, 0, 5); /* Box shadow */
+  -fx-text-fill: #FFFFFF; /* Text color */
+  -fx-font-size: 13px; /* Font size */
+  -fx-font-weight: bold; /* Font weight */
+  -fx-line-spacing: 24px; /* Line height (spacing between lines) */
+}
+
+.Songs_Button {
+    -fx-background-color: #DAD7CD;  /* Green background */
+    -fx-text-fill: black;            /* White text */
+    -fx-font-weight: bold;           /* Bold text */
+    -fx-padding: 10px 20px;          /* Padding around the text */
+    -fx-border-radius: 10px;         /* Rounded corners */
+    -fx-background-radius: 5px;     /* Rounded corners */
+    -fx-cursor: hand;               /* Hand cursor on hover */
+    -fx-effect: dropshadow(gaussian, black, 5, 0, 2, 2);  /* Subtle shadow */
+}
+
+#Liked_Songs{
+    -fx-font-size: 10px;             /* Font size */
+}
+
+#Create_Playlist{
+    -fx-font-size: 14px;             /* Font size */
 }
 
 .Website_Name{
