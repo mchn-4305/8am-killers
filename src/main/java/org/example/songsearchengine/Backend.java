@@ -190,14 +190,14 @@ public class Backend {
         return false;
     }
 
-    public static boolean editPlaylistTitle(String playlistTitle){
+    public static boolean editPlaylistTitle(String oldPlaylistTitle, String newPlaylistTitle){
         String up = "update Playlists set playlist_name = ? where playlist_id = ?";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(up);
-            ps.setString(1, playlistTitle);
-            ps.setString(2, ""+getPlaylistId(playlistTitle));
+            ps.setString(1, newPlaylistTitle);
+            ps.setString(2, ""+getPlaylistId(oldPlaylistTitle));
 
             ps.executeUpdate();
             return true;
@@ -205,6 +205,10 @@ public class Backend {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static List<String> getCurrentUserPlaylists(){
+        String sel = "select from Playlists";
     }
 
     public static List<String> selectTop20Songs(){

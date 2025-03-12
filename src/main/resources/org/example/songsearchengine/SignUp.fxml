@@ -10,7 +10,7 @@
 
 <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="480.0" styleClass="blue-panel" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label text="Sign UP" textFill="#f2f3f5">
+        <Label text="Sign Up" textFill="#f2f3f5">
             <font>
                 <Font size="20.0" />
             </font>
@@ -20,36 +20,31 @@
         </Label>
         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
             <children>
-                <TextField promptText="Full Name" styleClass="tf_box" HBox.hgrow="ALWAYS" />
+                <TextField promptText="Username" styleClass="tf_box" HBox.hgrow="ALWAYS" />
             </children>
             <VBox.margin>
                 <Insets left="15.0" right="15.0" top="20.0" />
             </VBox.margin>
         </HBox>
         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
-            <children>
-                <TextField promptText="Email" styleClass="tf_box" HBox.hgrow="ALWAYS" />
-            </children>
             <VBox.margin>
                 <Insets left="15.0" right="15.0" top="15.0" />
             </VBox.margin>
+         <children>
+                <TextField promptText="Password" styleClass="tf_box" HBox.hgrow="ALWAYS" />
+         </children>
         </HBox>
         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="245.0" prefHeight="40.0" prefWidth="200.0">
-            <children>
-                <TextField promptText="Password" styleClass="tf_box" HBox.hgrow="ALWAYS" />
-            </children>
             <VBox.margin>
                 <Insets left="15.0" right="15.0" top="20.0" />
             </VBox.margin>
+         <children>
+              <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="463.0" styleClass="blue-btn" text="Sign Up" textFill="WHITE">
+                  <font>
+                      <Font size="17.0" />
+                  </font>
+              </Button>
+         </children>
         </HBox>
-        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="463.0" styleClass="blue-btn" text="Sign Up" textFill="WHITE" VBox.vgrow="ALWAYS">
-            <VBox.margin>
-                <Insets left="15.0" right="15.0" top="20.0" />
-            </VBox.margin>
-            <font>
-                <Font size="17.0" />
-            </font>
-        </Button>
     </children>
 </VBox>
-
