@@ -107,3 +107,10 @@
     -fx-text-fill: white; /* Set text color to white */
     -fx-alignment: center; /* Center-align the text */
 }
+
+.Login_Website_Name{
+    -fx-font-family: "Caveat", cursive; /* Cursive font */
+    -fx-font-size: 50px; /* Set font size */
+    -fx-text-fill: white; /* Set text color to white */
+    -fx-alignment: center; /* Center-align the text */
+}

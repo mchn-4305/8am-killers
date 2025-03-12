@@ -22,11 +22,29 @@ public class LogInController{
     private TextField username;
     @FXML
     private TextField password;
-
+    private static boolean isSignUpShown = false;
+    public void initialize(){
+        if (!isSignUpShown) {
+            TranslateTransition t = new TranslateTransition(Duration.seconds(1), vbox);
+            t.play();
+            t.setOnFinished((e) -> {
+                try {
+                    fxml = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
+                    vbox.getChildren().clear();
+                    vbox.getChildren().setAll(fxml);
+                    isSignUpShown = true; // Set the flag to true after loading SignUp.fxml
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+        } else {
+            // Perform any other initialization you want (e.g., loading the login screen)
+        }
+    }
     @FXML
     private void open_signin(ActionEvent event){
         TranslateTransition t = new TranslateTransition(Duration.seconds(1),vbox);
-        t.setToX(vbox.getLayoutX()*20);
+        t.setToX(vbox.getLayoutX()*37);
         t.play();
         t.setOnFinished((e)-> {
             try{
