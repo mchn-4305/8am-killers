@@ -22,6 +22,11 @@ public class LogInController{
     private TextField username;
     @FXML
     private TextField password;
+    @FXML
+    private TextField signupusername;
+    @FXML
+    private TextField signuppassword;
+
     private static boolean isSignUpShown = false;
     public void initialize(){
         if (!isSignUpShown) {
@@ -77,6 +82,12 @@ public class LogInController{
     private void login(ActionEvent event){
         String user = username.getText();
         String pw = password.getText();
+
+        if (user.isEmpty() || pw.isEmpty()) {
+            System.out.println("Username and password cannot be empty.");
+            return;
+        }
+
         if(Backend.verifyLogin(user,pw)){
             UserSession.setCurrentUser(user);
             try{
@@ -95,4 +106,33 @@ public class LogInController{
             System.out.println("Wrong Login");
         }
     }
+
+    @FXML
+    private void signup(ActionEvent event) {
+        String user = signupusername.getText();
+        String pw = signuppassword.getText();
+
+        if (user.isEmpty() || pw.isEmpty()) {
+            System.out.println("Username and password cannot be empty.");
+            return;
+        }
+
+        if (Backend.insertUser(user, pw)) {
+            UserSession.setCurrentUser(user);
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Home.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(fxmlLoader.load());
+
+                stage.setScene(scene);
+                stage.sizeToScene();
+                stage.show();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("Signup failed. Username may already exist.");
+        }
+    }
+
 }

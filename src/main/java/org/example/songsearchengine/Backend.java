@@ -118,7 +118,7 @@ public class Backend {
     }
 
     public static boolean insertPlaylist(String playlistTitle) {
-        String ins = "insert into Playlsts (user_id, playlist_name) values (?, ?)";
+        String ins = "insert into Playlists (user_id, playlist_name) values (?, ?)";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -207,9 +207,9 @@ public class Backend {
         return false;
     }
 
-    public static List<String> getCurrentUserPlaylists(){
-        String sel = "select from Playlists";
-    }
+    //public static List<String> getCurrentUserPlaylists(){
+        //String sel = "select from Playlists";
+    //}
 
     public static List<String> selectTop20Songs(){
         String sel = """
