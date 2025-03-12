@@ -14,6 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ScrollPane?>
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.songsearchengine.HomeController">
    <children>
       <Rectangle fx:id="navbar" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="713.0" layoutY="89.0" stroke="BLACK" strokeType="INSIDE" width="198.0" />
@@ -23,21 +24,6 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Label layoutX="242.0" layoutY="109.0" text="Top Artists" textFill="WHITE">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Label>
-      <Label layoutX="242.0" layoutY="288.0" text="Top Albums" textFill="WHITE">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Label>
-      <Label layoutX="242.0" layoutY="483.0" text="Top Songs" textFill="WHITE">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Label>
       <Button fx:id="homeBtn" layoutX="14.0" layoutY="19.0" mnemonicParsing="false" onAction="#switchToHome" prefHeight="40.0" prefWidth="70.0" styleClass="HomeButton" stylesheets="@app.css">
          <graphic>
             <ImageView fitHeight="31.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
@@ -46,24 +32,46 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <TableView editable="true" layoutX="275.0" layoutY="152.0" prefHeight="135.0" prefWidth="943.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
-      <TableView editable="true" layoutX="275.0" layoutY="341.0" prefHeight="135.0" prefWidth="943.0">
-         <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
-         </columns>
-      </TableView>
-      <TableView editable="true" layoutX="275.0" layoutY="540.0" prefHeight="135.0" prefWidth="943.0">
-         <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
-         </columns>
-      </TableView>
+      <VBox layoutX="242.0" layoutY="100.0" spacing="5">
+         <Label layoutX="242.0" layoutY="109.0" text="Top Artists" textFill="WHITE">
+            <font>
+               <Font size="29.0" />
+            </font>
+         </Label>
+         <ScrollPane layoutX="242.0" layoutY="526.0" prefHeight="150" fitToWidth="true" hbarPolicy="NEVER">
+            <TableView fx:id="songsTable" layoutX="241.0" layoutY="526.0" prefHeight="150" prefWidth="955.0">
+               <columns>
+                  <TableColumn fx:id="songIdColumn" text="ID"/>
+                  <TableColumn fx:id="songNameColumn" prefWidth="587.3334045410156" text="Song Name"/>
+                  <TableColumn fx:id="artistColumn" minWidth="0.0" prefWidth="287.333251953125" text="Artist"/>
+               </columns>
+            </TableView>
+         </ScrollPane>
+         <Label layoutX="242.0" layoutY="288.0" text="Top Albums" textFill="WHITE">
+            <font>
+               <Font size="29.0" />
+            </font>
+         </Label>
+         <ScrollPane layoutX="242.0" layoutY="152.0" prefHeight="150" fitToWidth="true" hbarPolicy="NEVER">
+            <TableView fx:id="artistsTable" layoutX="242.0" layoutY="152.0" prefHeight="150" prefWidth="955.0">
+               <columns>
+                  <TableColumn fx:id="artistNameColumn" prefWidth="953.999989827474" text="Artist"/>
+               </columns>
+            </TableView>
+         </ScrollPane>
+         <Label layoutX="242.0" layoutY="483.0" text="Top Songs" textFill="WHITE">
+            <font>
+               <Font size="29.0" />
+            </font>
+         </Label>
+         <ScrollPane layoutX="242.0" layoutY="333.0" prefHeight="150" fitToWidth="true" hbarPolicy="NEVER">
+            <TableView fx:id="albumsTable" layoutX="242.0" layoutY="333.0" prefHeight="150" prefWidth="955.0">
+               <columns>
+                  <TableColumn fx:id="albumNameColumn" prefWidth="953.999989827474" text="Album"/>
+               </columns>
+            </TableView>
+         </ScrollPane>
+      </VBox>
       <VBox layoutX="396.0" layoutY="19.0" prefHeight="248.0" prefWidth="647.0" spacing="5">
          <TextField fx:id="searchField" prefHeight="43.0" prefWidth="618.0" promptText="Search" />
          <ListView fx:id="searchResults" maxHeight="200.0" visible="false" />
