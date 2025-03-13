@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,6 +30,8 @@ public class SceneController {
     private ListView<String> playlistListView;
     @FXML
     private VBox playlistContainer;
+
+    public static HashMap<String, String> playlistIdMap = new HashMap<>();
 
     private Timer timer = new Timer(true);
 
@@ -150,6 +154,6 @@ public class SceneController {
     }
 
     public void switchToAlbum(ActionEvent event){
-        switchScene(event, "Album.fxml");
+        switchScene(event, "AlbumView.fxml");
     }
 }

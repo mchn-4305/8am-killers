@@ -77,15 +77,16 @@
             </VBox.margin>
          </Button>
       </VBox>
-      <ScrollPane layoutX="253.0" layoutY="232.0" prefHeight="462.0" prefWidth="958.0">
+      <ScrollPane layoutX="218.0" layoutY="169.0" prefHeight="462.0" prefWidth="1045.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="459.0" prefWidth="957.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="459.0" prefWidth="1043.0">
                <children>
-                  <TableView fx:id="songsTable" layoutX="-2.0" prefHeight="462.0" prefWidth="949.0">
+                  <TableView fx:id="songsTable" layoutX="-2.0" prefHeight="462.0" prefWidth="1045.0">
                      <columns>
                         <TableColumn fx:id="songIdColumn" prefWidth="136.6666920185089" text="SongID" />
-                        <TableColumn fx:id="songNameColumn" prefWidth="605.3332977294922" text="Song Name" />
-                        <TableColumn fx:id="artistColumn" prefWidth="206.666748046875" text="Artist" />
+                        <TableColumn fx:id="songNameColumn" prefWidth="545.3333892822266" text="Song Name" />
+                        <TableColumn fx:id="artistColumn" prefWidth="192.0" text="Artist" />
+                        <TableColumn fx:id="actionColumn" prefWidth="156.66668701171875" text="Actions" />
                      </columns>
                   </TableView>
                </children>

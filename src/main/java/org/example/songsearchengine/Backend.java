@@ -139,23 +139,8 @@ public class Backend {
     }
 
 //    returns the id of a playlist given a playlist's title
-    public static int getPlaylistId(String playlistTitle){
-        String sel = "select playlist_id from Playlists where playlist_name = ?";
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            PreparedStatement ps = conn.prepareStatement(sel);
-            ps.setString(1, playlistTitle);
-
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                return rs.getInt("playlist_id");
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return -1;
+    public static String getPlaylistId(String playlistTitle){
+        return SceneController.playlistIdMap.get(playlistTitle);
     }
 
 //    returns whether a playlist song was inserted successfully
@@ -166,7 +151,7 @@ public class Backend {
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(ins);
 
-            String pid = "" + getPlaylistId(playlistTitle);
+            String pid = getPlaylistId(playlistTitle);
             ps.setString(1, pid);
             ps.setString(2, ""+song_id);
             ps.executeUpdate();
@@ -179,13 +164,13 @@ public class Backend {
 
 //    returns whether a playlist song was deleted successfully
     public static boolean deletePlaylist_Songs(String playlistTitle, int song_id){
-        String del = "delete from Playlist_Songs ps where ps.playlist_name = ? and ps.song_id = ?";
+        String del = "delete from Playlist_Songs where playlist_id = ? and song_id = ?";
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(del);
-            ps.setString(1, playlistTitle);
-            ps.setString(2, ""+song_id);
+            ps.setInt(1, Integer.parseInt(getPlaylistId(playlistTitle)));
+            ps.setInt(2, song_id);
 
             ps.executeUpdate();
             return true;
@@ -204,7 +189,7 @@ public class Backend {
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(up);
             ps.setString(1, newPlaylistTitle);
-            ps.setString(2, ""+getPlaylistId(oldPlaylistTitle));
+            ps.setString(2, getPlaylistId(oldPlaylistTitle));
 
             ps.executeUpdate();
             return true;
@@ -225,12 +210,12 @@ public class Backend {
 
         List<Song> results = new ArrayList<>();
 
-        int playlistId = getPlaylistId(playlistName);
+        String playlistId = getPlaylistId(playlistName);
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
-            ps.setString(1, ""+playlistId);
+            ps.setString(1, playlistId);
 
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -249,7 +234,7 @@ public class Backend {
 
     public static List<String> getUserPlaylists(){
         String sel = """
-                select playlist_name
+                select playlist_id, playlist_name
                 from Playlists
                 where user_id = ?""";
 
@@ -262,7 +247,9 @@ public class Backend {
 
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
+                String playlistId = rs.getString("playlist_id");
                 String playlistName = rs.getString("playlist_name");
+                SceneController.playlistIdMap.put(playlistName, playlistId);
                 results.add(playlistName);
             }
         } catch (Exception e){
