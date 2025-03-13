@@ -32,13 +32,11 @@ public class LogInController{
                     fxml = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
                     vbox.getChildren().clear();
                     vbox.getChildren().setAll(fxml);
-                    isSignUpShown = true; // Set the flag to true after loading SignUp.fxml
+                    isSignUpShown = true;
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             });
-        } else {
-            // Perform any other initialization you want (e.g., loading the login screen)
         }
     }
     @FXML

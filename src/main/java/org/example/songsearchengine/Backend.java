@@ -99,6 +99,7 @@ public class Backend {
         return results;
     }
 
+//    returns the id of the current user
     public static int getCurrentUserId(){
         String sel = "select user_id from Users where username = " + UserSession.getCurrentUser();
         try{
@@ -117,8 +118,9 @@ public class Backend {
         return -1;
     }
 
+//    returns whether a playlist was inserted successfully
     public static boolean insertPlaylist(String playlistTitle) {
-        String ins = "insert into Playlsts (user_id, playlist_name) values (?, ?)";
+        String ins = "insert into Playlists (user_id, playlist_name) values (?, ?)";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -135,6 +137,7 @@ public class Backend {
         return false;
     }
 
+//    returns the id of a playlist given a playlist's title
     public static int getPlaylistId(String playlistTitle){
         String sel = "select playlist_id from Playlists where playlist_name = ?";
         try{
@@ -154,6 +157,7 @@ public class Backend {
         return -1;
     }
 
+//    returns whether a playlist song was inserted successfully
     public static boolean insertPlaylist_Songs(String playlistTitle, int song_id){
         String ins = "insert into Playlist_Songs (playlist_id, song_id) values (?, ?)";
         try{
@@ -172,6 +176,7 @@ public class Backend {
         return false;
     }
 
+//    returns whether a playlist song was deleted successfully
     public static boolean deletePlaylist_Songs(String playlistTitle, int song_id){
         String del = "delete from Playlist_Songs ps where ps.playlist_name = ? and ps.song_id = ?";
         try{
@@ -190,6 +195,7 @@ public class Backend {
         return false;
     }
 
+//    returns whether a playlist title was updated correctly
     public static boolean editPlaylistTitle(String oldPlaylistTitle, String newPlaylistTitle){
         String up = "update Playlists set playlist_name = ? where playlist_id = ?";
         try{
@@ -207,8 +213,36 @@ public class Backend {
         return false;
     }
 
-    public static List<String> getCurrentUserPlaylists(){
-        String sel = "select from Playlists";
+//    returns a list of all songs within a playlist
+    public static List<Song> getAllPlaylistSongs(int playlistId){
+        String sel = """
+                select s.song_id as song_id, s.song_name as title, a.name as artist
+                from Artists a
+                inner join Songs s on s.artist_id = a.artist_id
+                inner join Playlist_Songs ps on s.song_id = ps.song_id
+                where ps.playlist_id = ?""";
+
+        List<Song> results = new ArrayList<>();
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            PreparedStatement ps = conn.prepareStatement(sel);
+            ps.setString(1, ""+playlistId);
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String id = rs.getString("song_id");
+                String title = rs.getString("title");
+                String artist = rs.getString("artist");
+
+                results.add(new Song(id, title, artist));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return results;
     }
 
     public static List<String> selectTop20Songs(){
@@ -282,15 +316,15 @@ public class Backend {
         String sel = """
                 select a.album_name as album
                 from Albums a
-                inner join Album_Songs alb_s on a.album_id = alb_s.album_id
                 inner join (
-                select s.song_id
+                select s.album_id,
                 from Songs s
                 inner join Playlist_Songs ps on s.song_id = ps.song_id
-                group by s.song_id
-                order by count(s.song_id) desc
+                group by s.album_id
+                order by count(s.album_id) desc
                 limit 20
-                ) temp on alb_s.song_id = temp.song_id""";
+                ) temp on a.album_id = temp.album_id;
+                """;
 
         List<String> results = new ArrayList<>();
 
