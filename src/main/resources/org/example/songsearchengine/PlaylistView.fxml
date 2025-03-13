@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -23,7 +27,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Label layoutX="218.0" layoutY="112.0" text="Liked Songs" textFill="WHITE">
+      <Label fx:id="playlistNameLabel" layoutX="218.0" layoutY="112.0" text="Playlist Name" textFill="WHITE">
          <font>
             <Font size="26.0" />
          </font>
@@ -50,20 +54,41 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="playlistBtn" layoutX="28.0" layoutY="132.0" mnemonicParsing="false" onAction="#switchToPlaylistView" prefHeight="40.0" prefWidth="143.0" styleClass="Songs_Button" text="Liked Songs">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Label layoutX="32.0" layoutY="220.0" styleClass="Albums_Title" text="My Playlists" textFill="WHITE" underline="true">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
-      <Button fx:id="createPlaylistBtn" layoutX="15.0" layoutY="268.0" mnemonicParsing="false" onAction="#switchToPlaylistForm" prefHeight="26.0" prefWidth="169.0" styleClass="Songs_Button" text="Create Playlist">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
+      <VBox layoutY="89.0" prefHeight="606.0" prefWidth="198.0">
+         <children>
+            <Label prefWidth="134.0" styleClass="Albums_Title" text="My Playlists" textAlignment="CENTER" textFill="WHITE" underline="true">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="32.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="createPlaylistBtn" layoutY="30.0" mnemonicParsing="false" onAction="#switchToPlaylistForm" prefHeight="26.0" prefWidth="169.0" styleClass="Songs_Button" text="Create Playlist">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="13.0" top="20.0" />
+               </VBox.margin>
+            </Button>
+            <ListView fx:id="PlaylistListView" prefHeight="56.0" prefWidth="178.0" styleClass="PlaylistListView" visible="false" />
+         </children>
+      </VBox>
+      <ScrollPane layoutX="253.0" layoutY="232.0" prefHeight="462.0" prefWidth="958.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="459.0" prefWidth="957.0">
+               <children>
+                  <TableView fx:id="songsTable" layoutX="-2.0" prefHeight="462.0" prefWidth="949.0">
+                     <columns>
+                        <TableColumn fx:id="songIdColumn" prefWidth="136.6666920185089" text="SongID" />
+                        <TableColumn fx:id="songNameColumn" prefWidth="605.3332977294922" text="Song Name" />
+                        <TableColumn fx:id="artistColumn" prefWidth="206.666748046875" text="Artist" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

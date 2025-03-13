@@ -59,7 +59,7 @@
     -fx-background-color: #344E41;
 }
 
-.Albums_Title {
+.playlistLabel {
     -fx-text-fill: white;
     -fx-font-size: 24px;
     -fx-font-weight: bold;

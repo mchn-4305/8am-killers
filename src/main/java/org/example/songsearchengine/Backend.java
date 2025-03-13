@@ -25,7 +25,7 @@ public class Backend {
     public static boolean insertUser(String username, String enteredPw){
         String ins = "insert into Users (username, user_password) values (?, ?)";
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(ins);
 
@@ -46,7 +46,7 @@ public class Backend {
         String sel = "select user_password from Users where username = ?";
 
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
 
@@ -75,7 +75,7 @@ public class Backend {
                 "select song_id as id, song_name as name, 'Songs' as table_name from Songs where song_name like ?";
 
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
 
@@ -101,11 +101,12 @@ public class Backend {
 
 //    returns the id of the current user
     public static int getCurrentUserId(){
-        String sel = "select user_id from Users where username = " + UserSession.getCurrentUser();
+        String sel = "select user_id from Users where username = ?";
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
+            ps.setString(1, UserSession.getCurrentUser());
 
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
@@ -122,7 +123,7 @@ public class Backend {
     public static boolean insertPlaylist(String playlistTitle) {
         String ins = "insert into Playlists (user_id, playlist_name) values (?, ?)";
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(ins);
 
@@ -141,7 +142,7 @@ public class Backend {
     public static int getPlaylistId(String playlistTitle){
         String sel = "select playlist_id from Playlists where playlist_name = ?";
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
             ps.setString(1, playlistTitle);
@@ -161,7 +162,7 @@ public class Backend {
     public static boolean insertPlaylist_Songs(String playlistTitle, int song_id){
         String ins = "insert into Playlist_Songs (playlist_id, song_id) values (?, ?)";
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(ins);
 
@@ -180,7 +181,7 @@ public class Backend {
     public static boolean deletePlaylist_Songs(String playlistTitle, int song_id){
         String del = "delete from Playlist_Songs ps where ps.playlist_name = ? and ps.song_id = ?";
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(del);
             ps.setString(1, playlistTitle);
@@ -199,7 +200,7 @@ public class Backend {
     public static boolean editPlaylistTitle(String oldPlaylistTitle, String newPlaylistTitle){
         String up = "update Playlists set playlist_name = ? where playlist_id = ?";
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(up);
             ps.setString(1, newPlaylistTitle);
@@ -214,7 +215,7 @@ public class Backend {
     }
 
 //    returns a list of all songs within a playlist
-    public static List<Song> getAllPlaylistSongs(int playlistId){
+    public static List<Song> getAllPlaylistSongs(String playlistName){
         String sel = """
                 select s.song_id as song_id, s.song_name as title, a.name as artist
                 from Artists a
@@ -224,8 +225,9 @@ public class Backend {
 
         List<Song> results = new ArrayList<>();
 
+        int playlistId = getPlaylistId(playlistName);
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
             ps.setString(1, ""+playlistId);
@@ -242,6 +244,55 @@ public class Backend {
             e.printStackTrace();
         }
 
+        return results;
+    }
+
+    public static List<String> getUserPlaylists(){
+        String sel = """
+                select playlist_name
+                from Playlists
+                where user_id = ?""";
+
+        List<String> results = new ArrayList<>();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            PreparedStatement ps = conn.prepareStatement(sel);
+            ps.setString(1, ""+getCurrentUserId());
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String playlistName = rs.getString("playlist_name");
+                results.add(playlistName);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public static List<Song> getAllAlbumSongs(int album_id){
+        String sel = """
+                select *
+                from Songs s
+                where s.album_id = ?""";
+
+        List<Song> results = new ArrayList<>();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            PreparedStatement ps = conn.prepareStatement(sel);
+
+            ps.setString(1, ""+album_id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String sid = rs.getString("song_id");
+                String title = rs.getString("song_name");
+                results.add(new Song(sid, title));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         return results;
     }
 
@@ -262,7 +313,7 @@ public class Backend {
         List<String> results = new ArrayList<>();
 
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
 
@@ -297,7 +348,7 @@ public class Backend {
         List<String> results = new ArrayList<>();
 
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
 
@@ -329,7 +380,7 @@ public class Backend {
         List<String> results = new ArrayList<>();
 
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement ps = conn.prepareStatement(sel);
 

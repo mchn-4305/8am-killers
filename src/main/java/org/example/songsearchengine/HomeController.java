@@ -30,6 +30,7 @@ public class HomeController extends SceneController {
 
     @FXML
     public void initialize() {
+        super.initialize();
         populateSongsTable();
         populateArtistsTable();
         populateAlbumsTable();
