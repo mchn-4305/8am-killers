@@ -317,7 +317,7 @@ public class Backend {
                 select a.album_name as album
                 from Albums a
                 inner join (
-                select s.album_id,
+                select s.album_id
                 from Songs s
                 inner join Playlist_Songs ps on s.song_id = ps.song_id
                 group by s.album_id
