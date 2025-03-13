@@ -84,7 +84,7 @@ public class SceneController {
                 } else {
                     playlistButton.setText(playlistName);
                     playlistButton.setOnAction(event -> switchToPlaylistView(event, playlistName));
-                    playlistButton.setPrefWidth(playlistListView.getWidth());
+                    playlistButton.setPrefWidth(100.0);
                     setGraphic(playlistButton);
                 }
             }

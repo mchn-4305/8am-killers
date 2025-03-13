@@ -4,6 +4,7 @@ module org.example.songsearchengine {
     requires java.sql;
     requires jbcrypt;
     requires mysql.connector.j;
+    requires java.desktop;
 
 
     opens org.example.songsearchengine to javafx.fxml;
