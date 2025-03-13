@@ -38,6 +38,7 @@ public class PlaylistViewController extends SceneController {
 
     @FXML
     public void initialize() {
+        super.initialize();
         songIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         songNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
