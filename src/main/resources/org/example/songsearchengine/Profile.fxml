@@ -198,5 +198,10 @@
             </Button>
          </children>
       </VBox>
+      <Button id="RESET" fx:id="LogOut" layoutX="624.0" layoutY="704.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="40.0" prefWidth="200.0" styleClass="HomeButton" text="LOG OUT">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

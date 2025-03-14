@@ -242,6 +242,10 @@ public class SceneController {
     public void switchToProfile(ActionEvent event) {
         switchScene(event, "Profile.fxml");
     }
+
+    public void switchToMainLogin(ActionEvent event, String s) {
+        switchScene(event, "MainLogin.fxml");
+    }
 }
 
 

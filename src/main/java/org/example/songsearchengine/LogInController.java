@@ -31,7 +31,7 @@ public class LogInController{
     @FXML
     private PasswordField confirmpassword;
 
-    private static boolean isSignUpShown = false;
+    static boolean isSignUpShown = false;
     public void initialize(){
         if (!isSignUpShown) {
             TranslateTransition t = new TranslateTransition(Duration.seconds(1), vbox);

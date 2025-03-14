@@ -1,8 +1,16 @@
 package org.example.songsearchengine;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ProfileController extends SceneController {
 
@@ -32,6 +40,8 @@ public class ProfileController extends SceneController {
     @FXML private PasswordField ConfirmNewPassword;
     @FXML private Button PasswordconfirmButton;
     @FXML private Button PasswordcancelButton;
+
+    @FXML private Button LogOut;
 
 
     private String currentUsername;
@@ -64,6 +74,24 @@ public class ProfileController extends SceneController {
     @FXML
     private void closeResetPasswordBox() {
         ChangePassword.setVisible(false);
+    }
+
+    @FXML
+    private void LogOut(ActionEvent event) {
+        LogInController.isSignUpShown = false;
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainLogin.fxml"));
+            Parent root = fxmlLoader.load(); // Ensure the FXML is reloaded
+            Scene scene = new Scene(root);
+
+            // Get current stage and set new scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
