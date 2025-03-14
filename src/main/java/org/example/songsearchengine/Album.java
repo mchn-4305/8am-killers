@@ -4,7 +4,6 @@ public class Album {
     private String albumId;
     private String name;
 
-    // ✅ Constructor that stores both albumId and name
     public Album(String albumId, String name) {
         this.albumId = albumId;
         this.name = name;

@@ -113,7 +113,6 @@ public class SceneController {
         if (selectedItem == null) return; // Do nothing if no selection
 
         System.out.println("User clicked: " + selectedItem); // Debugging
-        // ✅ Extract the actual album name
         String extractedName = extractAlbumName(selectedItem);
 
 
@@ -122,7 +121,6 @@ public class SceneController {
         if (Backend.isArtist(extractedName)) {
             switchToArtistPage(extractedName);
         }
-        // ✅ Check if it's an album
         else if (Backend.isAlbum(extractedName)) {
             List<Song> albumSongs = Backend.getAllAlbumSongs(extractedName);
             if (!albumSongs.isEmpty()) {
@@ -131,7 +129,6 @@ public class SceneController {
                 System.out.println("No songs found for album: " + extractedName);
             }
         }
-        // ✅ Check if it's a song
         else if (Backend.isSong(extractedName)) {
             String albumOfSong = Backend.getAlbumBySong(extractedName);
             if (albumOfSong != null) {
@@ -208,11 +205,10 @@ public class SceneController {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("AlbumView.fxml"));
             Parent root = loader.load();
 
-            // ✅ Get controller and pass album name
+
             AlbumController controller = loader.getController();
             controller.setAlbum(albumName);
 
-            // ✅ Switch scene
             Stage stage = (Stage) searchResults.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -227,21 +223,19 @@ public class SceneController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ArtistPage.fxml"));
             Parent root = loader.load();
 
-            // ✅ Pass artist name & albums to ArtistPageController
             ArtistPageController controller = loader.getController();
             controller.setArtist(artistName);
 
             List<Album> artistAlbums = Backend.getAlbumsByArtist(artistName);
             controller.setAlbums(artistAlbums);
 
-            // ✅ Switch scene
             Stage stage = (Stage) searchResults.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("❌ Error: Could not load ArtistPage.fxml. Check file location.");
+            System.out.println("Error: Could not load ArtistPage.fxml. Check file location.");
         }
     }
 

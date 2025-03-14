@@ -150,7 +150,7 @@ public static boolean insertPlaylist_Songs(String playlistTitle, int song_id) {
     try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
          PreparedStatement ps = conn.prepareStatement(ins)) {
 
-        // ✅ Get Playlist ID from its name
+
         String pid = getPlaylistId(playlistTitle);
         if (pid == null) {
             System.out.println("Error: Playlist ID not found for " + playlistTitle);
@@ -161,7 +161,7 @@ public static boolean insertPlaylist_Songs(String playlistTitle, int song_id) {
         ps.setInt(2, song_id);
 
         int rowsAffected = ps.executeUpdate();
-        return rowsAffected > 0; // ✅ Return true if successfully inserted
+        return rowsAffected > 0;
 
     } catch (SQLException e) {
         e.printStackTrace();
@@ -313,10 +313,6 @@ public static boolean insertPlaylist_Songs(String playlistTitle, int song_id) {
 
         return "Unknown Artist";
     }
-
-
-
-
 
     public static List<String> selectTop20Songs(){
         String sel = """
@@ -523,7 +519,7 @@ public static boolean insertPlaylist_Songs(String playlistTitle, int song_id) {
         WHERE ar.name = ?;
     """;
 
-        List<Album> albums = new ArrayList<>(); // ✅ Using Object to store both Album & AlbumId
+        List<Album> albums = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement ps = conn.prepareStatement(query)) {

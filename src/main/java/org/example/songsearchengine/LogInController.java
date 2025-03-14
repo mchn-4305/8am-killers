@@ -116,25 +116,25 @@ public class LogInController{
         String pw = signuppassword.getText();
         String confirmPw = confirmpassword.getText(); // Get the confirmation password
 
-        // ✅ Check if any field is empty
+        // check if any field is empty
         if (user.isEmpty() || pw.isEmpty() || confirmPw.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Signup Error", "All fields must be filled.");
             return;
         }
 
-        // ✅ Check if passwords match
+        // check if passwords match
         if (!pw.equals(confirmPw)) {
             showAlert(Alert.AlertType.ERROR, "Signup Error", "Passwords do not match.");
             return;
         }
 
-        // ✅ Check if the username already exists in the database
+        // check if the username already exists in the database
         if (Backend.doesUserExist(user)) {
             showAlert(Alert.AlertType.ERROR, "Signup Failed", "Username already exists. Please choose another.");
             return;
         }
 
-        // ✅ Insert new user if username is unique and passwords match
+        // insert new user if username is unique and passwords match
         if (Backend.insertUser(user, pw)) {
             UserSession.setCurrentUser(user);
             showAlert(Alert.AlertType.INFORMATION, "Signup Successful", "Account created successfully!");

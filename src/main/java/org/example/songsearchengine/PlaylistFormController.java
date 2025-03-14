@@ -20,6 +20,6 @@ public class PlaylistFormController extends SceneController{
     }
     @FXML
     public void initialize() {
-        super.initialize(); // ✅ Ensure SceneController initialization
+        super.initialize();
     }
 }

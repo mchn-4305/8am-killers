@@ -45,7 +45,6 @@ public class ProfileController extends SceneController {
         ChangeUser.setVisible(false); // Hide change username box initially
     }
 
-    // Show the Reset Username Box
     @FXML
     private void showResetUsernameBox() {
         ChangeUser.setVisible(true);
@@ -56,7 +55,7 @@ public class ProfileController extends SceneController {
         ChangePassword.setVisible(true);
     }
 
-    // Hide the Reset Username Box
+
     @FXML
     private void closeResetUsernameBox() {
         ChangeUser.setVisible(false);
@@ -67,7 +66,6 @@ public class ProfileController extends SceneController {
         ChangePassword.setVisible(false);
     }
 
-    // Handle Username Change Process
     @FXML
     private void handleUsernameChange() {
         String newUsername = newUsernameField.getText();

@@ -29,7 +29,7 @@ public class ArtistPageController extends SceneController {
         if (artistNameLabel != null) {
             artistNameLabel.setText(artistName);
         } else {
-            System.out.println("❌ artistNameLabel is NULL");
+            System.out.println("artistNameLabel is NULL");
         }
     }
 
@@ -39,7 +39,7 @@ public class ArtistPageController extends SceneController {
             ArtistTable.setItems(albumsList);
             ArtistTable.refresh();// ✅ Ensure table updates
         } else {
-            System.out.println("❌ ArtistTable is NULL");
+            System.out.println("ArtistTable is NULL");
         }
     }
 

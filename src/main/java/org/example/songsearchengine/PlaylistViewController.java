@@ -72,7 +72,14 @@ public class PlaylistViewController extends SceneController {
                     removeSongFromPlaylist(song);
                 });
 
-                removeButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+                removeButton.setStyle("-fx-background-color: red; -fx-text-fill: white; ");
+                removeButton.setOnMouseEntered(event ->
+                        removeButton.setStyle("-fx-background-color: darkred; -fx-text-fill: white; -fx-cursor: hand;")
+                );
+                removeButton.setOnMouseExited(event ->
+                        removeButton.setStyle("-fx-background-color: red; -fx-text-fill: white;")
+                );
+
             }
 
             @Override
@@ -86,12 +93,10 @@ public class PlaylistViewController extends SceneController {
             }
         });
 
-        // Setup columns for AddSongTable
         AddSongsongIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         AddSongsongnameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         AddSongartistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
 
-        // Load available songs into AddSongTable
         loadAvailableSongs();
     }
 
@@ -122,11 +127,9 @@ public class PlaylistViewController extends SceneController {
         if (event.getClickCount() == 2) { // Detects double-click
             Song selectedSong = AddSongTable.getSelectionModel().getSelectedItem();
             if (selectedSong != null) {
-                // ✅ Insert into database first
                 boolean success = Backend.insertPlaylist_Songs(playlistName, Integer.parseInt(selectedSong.getId()));
 
                 if (success) {
-                    // ✅ If successful, add song to the playlist table and remove it from available songs
                     songsTable.getItems().add(selectedSong);
                     AddSongTable.getItems().remove(selectedSong);
                 } else {

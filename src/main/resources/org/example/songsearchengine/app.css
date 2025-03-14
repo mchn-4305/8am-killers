@@ -82,6 +82,12 @@
   -fx-line-spacing: 24px;
 }
 
+.Next_Button:hover {
+    -fx-background-color: #3A5A40;
+    -fx-effect: dropshadow(gaussian, #A3C090, 8, 0, 0, 5);
+    -fx-text-fill: #DAD7CD;
+}
+
 .Songs_Button {
     -fx-background-color: #DAD7CD;
     -fx-text-fill: black;
@@ -255,6 +261,8 @@
     -fx-text-fill: white !important; /* Ensure text remains white */
     -fx-alignment: center;
     -fx-pref-width: 80%;
+    -fx-cell-size: 50px;
+    -fx-effect: dropshadow(gaussian, black, 5, 0, 2, 2);
 }
 
 /* Selected cell style */
@@ -273,6 +281,13 @@
     -fx-min-width: 100%; /* Forces buttons inside the cells to stretch */
     -fx-max-width: Infinity; /* Allows them to fill the available space */
     -fx-alignment: center; /* Centers text inside the button */
+}
+
+.PlaylistListView .list-cell:hover {
+    -fx-background-color: #A3C090; /* Light green on hover */
+    -fx-text-fill: black; /* Changes text color */
+    -fx-cursor: hand; /* Makes it clear it's clickable */
+    -fx-effect: dropshadow(gaussian, black, 8, 0, 3, 3); /* Adds hover shadow */
 }
 
 
@@ -337,7 +352,7 @@
 }
 
 #RESET {
-    -fx-background-color: #A3C090; /* Default Blue Button */
+    -fx-background-color: #A3C090;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 8px 15px;
@@ -348,13 +363,50 @@
 }
 
 #RESET:hover {
-    -fx-background-color: #28a745; /* Green background */
+    -fx-background-color: #28a745;
     -fx-effect: dropshadow(three-pass-box, rgba(40, 167, 69, 0.8), 15, 0.3, 0, 0);
 }
 
 #RESET:pressed {
-    -fx-background-color: #218838; /* Darker Green */
+    -fx-background-color: #218838;
     -fx-effect: dropshadow(three-pass-box, rgba(40, 167, 69, 1), 20, 0.5, 0, 0);
 }
 
+.SearchBarListView {
+    -fx-background-color: #A3C090; /* Beige background */
+    -fx-border-color: black; /* Softer beige border */
+    -fx-border-width: 2px;
+}
+
+.SearchBarListView .list-cell {
+    -fx-background-color:#A3C090; /* Lighter beige for items */
+    -fx-text-fill: black; /* Warm brown text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-color: black;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.SearchBarListView .list-cell:hover {
+    -fx-background-color: #E8D8B4; /* Slightly darker beige */
+    -fx-text-fill: #3D2E1E; /* Darker brown for better contrast */
+    -fx-effect: dropshadow(gaussian, rgba(90, 74, 59, 0.4), 6, 0, 2, 2);
+    -fx-cursor: hand;
+}
+
+.SearchBarListView .list-cell:selected {
+    -fx-background-color: #CBB292; /* Warm caramel for selection */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.SearchBarListView .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.SearchBarListView .scroll-bar .thumb {
+    -fx-background-color: #6B8E23; /* Muted beige scrollbar */
+    -fx-background-radius: 5px;
+}
 

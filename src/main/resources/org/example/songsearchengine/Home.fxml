@@ -67,7 +67,7 @@
       </VBox>
       <VBox layoutX="396.0" layoutY="19.0" prefHeight="248.0" prefWidth="647.0" spacing="5">
          <TextField fx:id="searchField" prefHeight="43.0" prefWidth="618.0" promptText="Search" />
-         <ListView fx:id="searchResults" maxHeight="200.0" onMouseClicked="#handleSearchSelection" visible="false" />
+         <ListView fx:id="searchResults" maxHeight="200.0" onMouseClicked="#handleSearchSelection" styleClass="SearchBarListView" visible="false" />
       </VBox>
       <ImageView fitHeight="26.0" fitWidth="29.0" layoutX="365.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../../../Icons/Search.png" />

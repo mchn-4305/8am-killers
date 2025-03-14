@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -39,10 +40,26 @@
             <Image url="@../../../Icons/Search.png" />
          </image>
       </ImageView>
+      <ScrollPane layoutX="218.0" layoutY="169.0" prefHeight="462.0" prefWidth="1045.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="459.0" prefWidth="1043.0">
+               <children>
+                  <TableView fx:id="songsTable" layoutX="-2.0" prefHeight="462.0" prefWidth="1045.0">
+                     <columns>
+                        <TableColumn fx:id="songIdColumn" prefWidth="136.6666920185089" text="SongID" />
+                        <TableColumn fx:id="songNameColumn" prefWidth="545.3333892822266" text="Song Name" />
+                        <TableColumn fx:id="artistColumn" prefWidth="192.0" text="Artist" />
+                        <TableColumn fx:id="actionColumn" prefWidth="156.66668701171875" text="Actions" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
       <VBox layoutX="396.0" layoutY="19.0" prefHeight="248.0" prefWidth="647.0" spacing="5">
          <children>
             <TextField fx:id="searchField" prefHeight="43.0" prefWidth="618.0" promptText="Search" />
-            <ListView fx:id="searchResults" maxHeight="200.0" onMouseClicked="#handleSearchSelection" visible="false" />
+            <ListView fx:id="searchResults" maxHeight="200.0" onMouseClicked="#handleSearchSelection" styleClass="SearchBarListView" visible="false" />
          </children>
       </VBox>
       <Button fx:id="Profile" layoutX="1183.0" layoutY="20.0" mnemonicParsing="false" onAction="#switchToProfile" prefHeight="40.0" prefWidth="70.0" styleClass="HomeButton" stylesheets="@app.css">
@@ -77,22 +94,6 @@
             </VBox.margin>
          </Button>
       </VBox>
-      <ScrollPane layoutX="218.0" layoutY="169.0" prefHeight="462.0" prefWidth="1045.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="459.0" prefWidth="1043.0">
-               <children>
-                  <TableView fx:id="songsTable" layoutX="-2.0" prefHeight="462.0" prefWidth="1045.0">
-                     <columns>
-                        <TableColumn fx:id="songIdColumn" prefWidth="136.6666920185089" text="SongID" />
-                        <TableColumn fx:id="songNameColumn" prefWidth="545.3333892822266" text="Song Name" />
-                        <TableColumn fx:id="artistColumn" prefWidth="192.0" text="Artist" />
-                        <TableColumn fx:id="actionColumn" prefWidth="156.66668701171875" text="Actions" />
-                     </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
       <Button fx:id="AddSongButton" layoutX="1187.0" layoutY="107.0" mnemonicParsing="false" onAction="#showSongSelection" prefHeight="26.0" prefWidth="45.0" styleClass="HomeButton">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="HomeButton">
@@ -102,13 +103,8 @@
             </ImageView>
          </graphic>
       </Button>
-      <VBox fx:id="songSelection" layoutX="380.0" layoutY="100.0" prefHeight="585.0" prefWidth="668.0" styleClass="PlaylistVBox" stylesheets="@app.css" visible="false">
+      <VBox fx:id="songSelection" layoutX="386.0" layoutY="107.0" prefHeight="585.0" prefWidth="668.0" style="-fx-background-color: black; -fx-border-color: black; -fx-border-width: 2px;" styleClass="PlaylistVBox" stylesheets="@app.css" visible="false">
          <children>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#hideSongSelction" styleClass="Next_Button" text="EXIT">
-               <VBox.margin>
-                  <Insets left="600.0" />
-               </VBox.margin>
-            </Button>
             <TableView fx:id="AddSongTable" onMouseClicked="#handleTableSelection" prefHeight="537.0" prefWidth="668.0">
               <columns>
                 <TableColumn fx:id="AddSongsongIdColumn" minWidth="-Infinity" prefWidth="75.0" text="Song ID" />
@@ -119,6 +115,14 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#hideSongSelction" prefHeight="27.0" prefWidth="78.0" styleClass="Next_Button" text="EXIT" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets left="288.0" top="5.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </VBox>
    </children>

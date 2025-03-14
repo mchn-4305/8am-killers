@@ -43,7 +43,7 @@
       <VBox layoutX="396.0" layoutY="19.0" prefHeight="248.0" prefWidth="647.0" spacing="5">
          <children>
             <TextField fx:id="searchField" prefHeight="43.0" prefWidth="618.0" promptText="Search" />
-            <ListView fx:id="searchResults" maxHeight="200.0" onMouseClicked="#handleSearchSelection" visible="false" />
+            <ListView fx:id="searchResults" maxHeight="200.0" onMouseClicked="#handleSearchSelection" styleClass="SearchBarListView" visible="false" />
          </children>
       </VBox>
       <Button fx:id="Profile" layoutX="1183.0" layoutY="20.0" mnemonicParsing="false" onAction="#switchToProfile" prefHeight="40.0" prefWidth="70.0" styleClass="HomeButton" stylesheets="@app.css">

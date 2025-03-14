@@ -63,7 +63,7 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <ListView fx:id="searchResults" maxHeight="200.0" onMouseClicked="#handleSearchSelection" visible="false" />
+            <ListView fx:id="searchResults" maxHeight="200.0" onMouseClicked="#handleSearchSelection" styleClass="SearchBarListView" visible="false" />
          </children>
       </VBox>
       <VBox layoutX="10.0" layoutY="89.0" prefWidth="178.0">
