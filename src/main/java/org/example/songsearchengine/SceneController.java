@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -48,31 +49,20 @@ public class SceneController {
                 searchResults.setVisible(false);
             }
         });
-
-        if(searchResults!=null){
-            searchResults.setOnMouseClicked(event -> {
-                String selectedItem = searchResults.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
-                    searchField.setText(selectedItem);
-                    searchResults.setVisible(false);
-                }
-            });
-        }
     }
 
-    private void loadPlaylists(){
+    private void loadPlaylists() {
         VBox.setVgrow(plscroll, Priority.ALWAYS);
 
         plscroll.setVisible(false);
 
         ObservableList<String> playlists = FXCollections.observableArrayList(Backend.getUserPlaylists());
 
-        if(playlists.isEmpty()){
+        if (playlists.isEmpty()) {
             plscroll.setVisible(false);
             plscroll.setPrefHeight(0);
             return;
-        }
-        else{
+        } else {
             plscroll.setVisible(true);
         }
 
@@ -89,6 +79,7 @@ public class SceneController {
                     playlistButton.setText(playlistName);
                     playlistButton.setOnAction(event -> switchToPlaylistView(event, playlistName));
                     playlistButton.setPrefWidth(100.0);
+                    playlistButton.getStyleClass().add("playlist-button");
                     setGraphic(playlistButton);
                 }
             }
@@ -115,24 +106,83 @@ public class SceneController {
         }, 300);
     }
 
-    public void switchScene(ActionEvent event, String fxmlFile){
-        try{
+    @FXML
+    public void handleSearchSelection() {
+        String selectedItem = searchResults.getSelectionModel().getSelectedItem();
+
+        if (selectedItem == null) return; // Do nothing if no selection
+
+        System.out.println("User clicked: " + selectedItem); // Debugging
+        // ✅ Extract the actual album name
+        String extractedName = extractAlbumName(selectedItem);
+
+
+        System.out.println("Extracted Album Name: " + extractedName); // Debugging
+
+        if (Backend.isArtist(extractedName)) {
+            switchToArtistPage(extractedName);
+        }
+        // ✅ Check if it's an album
+        else if (Backend.isAlbum(extractedName)) {
+            List<Song> albumSongs = Backend.getAllAlbumSongs(extractedName);
+            if (!albumSongs.isEmpty()) {
+                switchToAlbumPage(extractedName);
+            } else {
+                System.out.println("No songs found for album: " + extractedName);
+            }
+        }
+        // ✅ Check if it's a song
+        else if (Backend.isSong(extractedName)) {
+            String albumOfSong = Backend.getAlbumBySong(extractedName);
+            if (albumOfSong != null) {
+                List<Song> albumSongs = Backend.getAllAlbumSongs(albumOfSong);
+                if (!albumSongs.isEmpty()) {
+                    switchToAlbumPage(albumOfSong);
+                } else {
+                    System.out.println("No songs found for album: " + albumOfSong);
+                }
+            } else {
+                System.out.println("Song's album not found.");
+            }
+        }
+    }
+
+
+    private String extractAlbumName(String selectedItem) {
+        if (selectedItem.startsWith("Albums: ")) {
+            selectedItem = selectedItem.substring(8); // Remove "Albums: "
+        } else if (selectedItem.startsWith("Songs: ")) {
+            selectedItem = selectedItem.substring(7); // Remove "Songs: "
+        } else if (selectedItem.startsWith("Artists: ")) {
+            selectedItem = selectedItem.substring(9); // Remove "Artists: "
+        }
+
+        int idIndex = selectedItem.lastIndexOf("(ID: ");
+        if (idIndex != -1) {
+            selectedItem = selectedItem.substring(0, idIndex).trim(); // Remove "(ID: X)"
+        }
+
+        return selectedItem.isEmpty() ? null : selectedItem;
+    }
+
+    public void switchScene(ActionEvent event, String fxmlFile) {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlFile));
-            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
             stage.show();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void switchToHome(ActionEvent event){
+    public void switchToHome(ActionEvent event) {
         switchScene(event, "Home.fxml");
     }
 
-    public void switchToPlaylistView(ActionEvent event, String playlistName){
+    public void switchToPlaylistView(ActionEvent event, String playlistName) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PlaylistView.fxml"));
             Parent root = fxmlLoader.load();
@@ -140,7 +190,7 @@ public class SceneController {
             PlaylistViewController controller = fxmlLoader.getController();
             controller.setPlaylistName(playlistName);
 
-            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -149,11 +199,56 @@ public class SceneController {
         }
     }
 
-    public void switchToPlaylistForm(ActionEvent event){
+    public void switchToPlaylistForm(ActionEvent event) {
         switchScene(event, "PlaylistForm.fxml");
     }
 
-    public void switchToAlbum(ActionEvent event){
-        switchScene(event, "AlbumView.fxml");
+    void switchToAlbumPage(String albumName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("AlbumView.fxml"));
+            Parent root = loader.load();
+
+            // ✅ Get controller and pass album name
+            AlbumController controller = loader.getController();
+            controller.setAlbum(albumName);
+
+            // ✅ Switch scene
+            Stage stage = (Stage) searchResults.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void switchToArtistPage(String artistName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ArtistPage.fxml"));
+            Parent root = loader.load();
+
+            // ✅ Pass artist name & albums to ArtistPageController
+            ArtistPageController controller = loader.getController();
+            controller.setArtist(artistName);
+
+            List<Album> artistAlbums = Backend.getAlbumsByArtist(artistName);
+            controller.setAlbums(artistAlbums);
+
+            // ✅ Switch scene
+            Stage stage = (Stage) searchResults.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("❌ Error: Could not load ArtistPage.fxml. Check file location.");
+        }
+    }
+
+    public void switchToProfile(ActionEvent event) {
+        switchScene(event, "Profile.fxml");
     }
 }
+
+
+

@@ -31,12 +31,12 @@
                <Font size="29.0" />
             </font>
          </Label>
-         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="242.0" layoutY="526.0" prefHeight="150">
+         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="242.0" layoutY="526.0" prefHeight="150" vbarPolicy="NEVER">
             <TableView fx:id="songsTable" layoutX="241.0" layoutY="526.0" prefHeight="150" prefWidth="955.0">
                <columns>
-                  <TableColumn fx:id="songIdColumn" text="ID" />
-                  <TableColumn fx:id="songNameColumn" prefWidth="587.3334045410156" text="Song Name" />
-                  <TableColumn fx:id="artistColumn" minWidth="0.0" prefWidth="287.333251953125" text="Artist" />
+                  <TableColumn fx:id="songIdColumn" editable="false" text="ID" />
+                  <TableColumn fx:id="songNameColumn" editable="false" prefWidth="587.3334045410156" text="Song Name" />
+                  <TableColumn fx:id="artistColumn" editable="false" minWidth="0.0" prefWidth="287.333251953125" resizable="false" text="Artist" />
                </columns>
             </TableView>
          </ScrollPane>
@@ -45,10 +45,10 @@
                <Font size="29.0" />
             </font>
          </Label>
-         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="242.0" layoutY="152.0" prefHeight="150">
+         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="242.0" layoutY="152.0" prefHeight="150" vbarPolicy="NEVER">
             <TableView fx:id="artistsTable" layoutX="242.0" layoutY="152.0" prefHeight="150" prefWidth="955.0">
                <columns>
-                  <TableColumn fx:id="artistNameColumn" prefWidth="953.999989827474" text="Artist" />
+                  <TableColumn fx:id="artistNameColumn" editable="false" prefWidth="953.999989827474" text="Artist" />
                </columns>
             </TableView>
          </ScrollPane>
@@ -57,33 +57,33 @@
                <Font size="29.0" />
             </font>
          </Label>
-         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="242.0" layoutY="333.0" prefHeight="150">
+         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="242.0" layoutY="333.0" prefHeight="150" vbarPolicy="NEVER">
             <TableView fx:id="albumsTable" layoutX="242.0" layoutY="333.0" prefHeight="150" prefWidth="955.0">
                <columns>
-                  <TableColumn fx:id="albumNameColumn" prefWidth="953.999989827474" text="Album" />
+                  <TableColumn fx:id="albumNameColumn" editable="false" prefWidth="953.999989827474" text="Album" />
                </columns>
             </TableView>
          </ScrollPane>
       </VBox>
       <VBox layoutX="396.0" layoutY="19.0" prefHeight="248.0" prefWidth="647.0" spacing="5">
          <TextField fx:id="searchField" prefHeight="43.0" prefWidth="618.0" promptText="Search" />
-         <ListView fx:id="searchResults" maxHeight="200.0" visible="false" />
+         <ListView fx:id="searchResults" maxHeight="200.0" onMouseClicked="#handleSearchSelection" visible="false" />
       </VBox>
       <ImageView fitHeight="26.0" fitWidth="29.0" layoutX="365.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../../../Icons/Search.png" />
       </ImageView>
       <VBox layoutX="10.0" layoutY="89.0" prefWidth="178.0">
-         <Label prefHeight="35.0" prefWidth="159.0" styleClass="playlistLabel" text="My Playlists" textAlignment="CENTER" textFill="WHITE" underline="true">
+         <Label prefHeight="35.0" prefWidth="180.0" styleClass="playlistLabel" text="My Playlists" textAlignment="CENTER" textFill="WHITE" underline="true">
             <font>
                <Font size="17.0" />
             </font>
             <VBox.margin>
-               <Insets left="32.0" />
+               <Insets left="23.0" />
             </VBox.margin>
          </Label>
-         <ScrollPane fx:id="plscroll" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
-            <VBox fx:id="playlistContainer" spacing="5.0">
-               <ListView fx:id="playlistListView" prefWidth="178.0" styleClass="PlaylistListView" />
+         <ScrollPane id="PlaylistScroll" fx:id="plscroll" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="408.0" minWidth="178.0" prefHeight="408.0" prefWidth="178.0" styleClass="PlaylistScroll" stylesheets="@app.css">
+            <VBox fx:id="playlistContainer" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="397.0" minWidth="171.0" prefHeight="397.0" prefWidth="171.0" spacing="5.0" styleClass="PlaylistScroll" stylesheets="@app.css">
+               <ListView fx:id="playlistListView" maxHeight="495.0" maxWidth="174.0" minHeight="370.0" minWidth="169.0" prefHeight="370.0" prefWidth="169.0" styleClass="PlaylistListView" />
             </VBox>
          </ScrollPane>
          <Button fx:id="createPlaylistBtn" mnemonicParsing="false" onAction="#switchToPlaylistForm" prefHeight="40.0" prefWidth="141.0" styleClass="Songs_Button" text="Create Playlist">
@@ -91,11 +91,11 @@
                <Font size="14.0" />
             </font>
             <VBox.margin>
-               <Insets left="13.0" top="20.0" />
+               <Insets left="18.0" top="20.0" />
             </VBox.margin>
          </Button>
       </VBox>
-      <Button fx:id="homeBtn1" layoutX="1183.0" layoutY="20.0" mnemonicParsing="false" onAction="#switchToHome" prefHeight="40.0" prefWidth="70.0" styleClass="HomeButton" stylesheets="@app.css">
+      <Button fx:id="Profile" layoutX="1183.0" layoutY="20.0" mnemonicParsing="false" onAction="#switchToProfile" prefHeight="40.0" prefWidth="70.0" styleClass="HomeButton" stylesheets="@app.css">
          <graphic>
             <ImageView fitHeight="28.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                <image>

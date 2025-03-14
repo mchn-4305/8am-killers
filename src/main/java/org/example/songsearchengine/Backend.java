@@ -144,25 +144,33 @@ public class Backend {
     }
 
 //    returns whether a playlist song was inserted successfully
-    public static boolean insertPlaylist_Songs(String playlistTitle, int song_id){
-        String ins = "insert into Playlist_Songs (playlist_id, song_id) values (?, ?)";
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            PreparedStatement ps = conn.prepareStatement(ins);
+public static boolean insertPlaylist_Songs(String playlistTitle, int song_id) {
+    String ins = "INSERT INTO Playlist_Songs (playlist_id, song_id) VALUES (?, ?)";
 
-            String pid = getPlaylistId(playlistTitle);
-            ps.setString(1, pid);
-            ps.setString(2, ""+song_id);
-            ps.executeUpdate();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
+    try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+         PreparedStatement ps = conn.prepareStatement(ins)) {
+
+        // ✅ Get Playlist ID from its name
+        String pid = getPlaylistId(playlistTitle);
+        if (pid == null) {
+            System.out.println("Error: Playlist ID not found for " + playlistTitle);
+            return false;
         }
-        return false;
-    }
 
-//    returns whether a playlist song was deleted successfully
+        ps.setString(1, pid);
+        ps.setInt(2, song_id);
+
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0; // ✅ Return true if successfully inserted
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+
+
+    //    returns whether a playlist song was deleted successfully
     public static boolean deletePlaylist_Songs(String playlistTitle, int song_id){
         String del = "delete from Playlist_Songs where playlist_id = ? and song_id = ?";
         try{
@@ -258,30 +266,57 @@ public class Backend {
         return results;
     }
 
-    public static List<Song> getAllAlbumSongs(int album_id){
-        String sel = """
-                select *
-                from Songs s
-                where s.album_id = ?""";
+    public static List<Song> getAllAlbumSongs(String albumName) {
+        String query = """
+            SELECT s.song_id, s.song_name
+            FROM Songs s
+            INNER JOIN Albums a ON s.album_id = a.album_id
+            WHERE a.album_name = ?;
+            """;
 
-        List<Song> results = new ArrayList<>();
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            PreparedStatement ps = conn.prepareStatement(sel);
+        List<Song> songs = new ArrayList<>();
 
-            ps.setString(1, ""+album_id);
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, albumName);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                String sid = rs.getString("song_id");
-                String title = rs.getString("song_name");
-                results.add(new Song(sid, title));
+
+            while (rs.next()) {
+                songs.add(new Song(rs.getString("song_id"), rs.getString("song_name")));
             }
-        } catch (Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return results;
+
+        return songs;
     }
+
+    public static String getArtistByAlbum(String albumName) {
+        String query = """
+        SELECT a.name 
+        FROM Artists a
+        INNER JOIN Albums alb ON a.artist_id = alb.artist_id
+        WHERE alb.album_name = ?;
+    """;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, albumName);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("name");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Unknown Artist";
+    }
+
+
+
+
 
     public static List<String> selectTop20Songs(){
         String sel = """
@@ -381,6 +416,189 @@ public class Backend {
         }
         return results;
     }
+
+    public static List<Song> getAllAvailableSongs() {
+        // This should return a list of songs not yet in the playlist
+        String query = """
+            SELECT s.song_id, s.song_name, a.name AS artist
+            FROM Songs s
+            INNER JOIN Artists a ON s.artist_id = a.artist_id
+            """;
+
+        List<Song> songs = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                songs.add(new Song(rs.getString("song_id"), rs.getString("song_name"), rs.getString("artist")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return songs;
+    }
+
+    public static boolean isAlbum(String name) {
+        String query = "SELECT COUNT(*) FROM Albums WHERE album_name = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean isSong(String name) {
+        String query = "SELECT COUNT(*) FROM Songs WHERE song_name = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean isArtist(String name) {
+        String query = "SELECT COUNT(*) FROM Artists WHERE name = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public static String getAlbumBySong(String songName) {
+        String query = """
+       SELECT alb.album_name
+       FROM Albums alb
+       INNER JOIN Songs s ON s.album_id = alb.album_id
+       WHERE s.song_name = ?;
+            """;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, songName);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("album_name");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Album> getAlbumsByArtist(String artistName) {
+        String query = """
+        SELECT a.album_id, a.album_name
+        FROM Albums a
+        INNER JOIN Artists ar ON a.artist_id = ar.artist_id
+        WHERE ar.name = ?;
+    """;
+
+        List<Album> albums = new ArrayList<>(); // ✅ Using Object to store both Album & AlbumId
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, artistName);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String albumId = rs.getString("album_id");
+                String albumName = rs.getString("album_name");
+
+                albums.add(new Album(albumId, albumName));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return albums;
+    }
+
+    public static boolean updateUsername(String oldUsername, String newUsername) {
+        String query = "UPDATE Users SET username = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, newUsername);
+            ps.setString(2, oldUsername);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0; // Return true if update was successful
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean updatePassword(String username, String newPassword) {
+        String updateQuery = "UPDATE Users SET user_password = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(updateQuery)) {
+
+            String hashedPassword = hashPassword(newPassword);
+            ps.setString(1, hashedPassword);
+            ps.setString(2, username);
+
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean doesUserExist(String username) {
+        String query = "SELECT COUNT(*) FROM Users WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // If count > 0, the username already exists
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
 
 

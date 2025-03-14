@@ -67,8 +67,8 @@
 
 .Albums_Subtitle {
     -fx-text-fill: white;
-    -fx-font-size: 18px;
-    -fx-font-weight: normal;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
     -fx-opacity: 0.7;
 }
 
@@ -114,3 +114,247 @@
     -fx-text-fill: white;
     -fx-alignment: center
 }
+
+.Albums_Title{
+-fx-font-size: 32px;  /* Big font size */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-text-fill: black;  /* Black text color */
+    -fx-alignment: center; /* Center alignment */
+    -fx-padding: 10px;     /* Add spacing */
+    -fx-background-color: transparent; /* No background */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@400..700&display=swap');
+
+/* TableView General Styling */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 5px;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(gaussian, black, 5, 0, 2, 2);
+}
+
+/* Table Column Header Styling */
+.table-view .column-header {
+    -fx-background-color: #344E41;
+    -fx-border-color: #A3C090;
+    -fx-border-width: 0 0 2px 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-family: "Audiowide", sans-serif;
+    -fx-alignment: center;
+}
+
+/* Alternating Row Colors */
+.table-row-cell {
+    -fx-background-color: #3A5A40;
+    -fx-text-fill: white !important;
+    -fx-font-size: 12px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #344E41;
+    -fx-text-fill: white !important;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #A3C090;
+    -fx-text-fill: black;
+}
+
+/* Ensure Table Cells Also Have White Text */
+.table-cell {
+    -fx-text-fill: white !important; /* Forces text inside the cells to be white */
+    -fx-font-size: 12px;
+}
+
+/* Hover Effect on Rows */
+.table-row-cell:hover {
+
+
+.table-row-cell:odd {
+    -fx-background-color: #344E41;
+    -fx-text-fill: white !important;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #A3C090;
+    -fx-text-fill: black;
+}
+
+/* Table Cell Padding */
+.table-cell {
+    -fx-padding: 10px;
+}
+
+/* Hover Effect on Rows */
+.table-row-cell:hover {
+    -fx-background-color: #6B8E23;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+/* Adjusting Focus Styling */
+.table-view:focused {
+    -fx-border-color: #A3C090;
+    -fx-border-width: 2px;
+}
+
+.PlaylistScroll {
+    -fx-background: none !important;
+    -fx-background-color: rgba(0, 0, 0, 0) !important; /* Ensures full transparency */
+    -fx-border-color: transparent !important;
+}
+
+/* Make the inner scrolling content area transparent */
+.PlaylistScroll .viewport {
+    -fx-background: none !important;
+    -fx-background-color: transparent !important;
+}
+
+/* Ensure the scroll bars are transparent */
+.PlaylistScroll .scroll-bar {
+    -fx-background-color: transparent !important;
+}
+
+/* Make the scrollbar track invisible */
+.PlaylistScroll .scroll-bar .track {
+    -fx-background-color: transparent !important;
+}
+
+/* Keep the scrollbar thumb visible and styled */
+.PlaylistScroll .scroll-bar .thumb {
+    -fx-background-color: #A3C090; /* You can change this */
+    -fx-background-radius: 5px;
+}
+
+
+.PlaylistListView {
+    -fx-background: none !important;
+    -fx-background-color: transparent !important; /* Remove background */
+    -fx-border-color: transparent !important;
+    -fx-alignment: center;
+    -fx-padding: 10px;
+}
+
+/* Make the viewport (inner scrolling content) transparent */
+.PlaylistListView .viewport {
+    -fx-background: none !important;
+    -fx-background-color: transparent !important;
+}
+
+/* Make ListView rows transparent */
+.PlaylistListView .list-cell {
+    -fx-background: none !important;
+    -fx-background-color: transparent !important;
+    -fx-text-fill: white !important; /* Ensure text remains white */
+    -fx-alignment: center;
+    -fx-pref-width: 80%;
+}
+
+/* Selected cell style */
+.PlaylistListView .list-cell:selected {
+    -fx-background-color: #A3C090 !important;
+    -fx-text-fill: black !important;
+}
+
+
+.PlaylistScroll .content {
+    -fx-alignment: center;
+    -fx-padding: 10px;
+}
+
+.PlaylistListView .list-cell > Button {
+    -fx-min-width: 100%; /* Forces buttons inside the cells to stretch */
+    -fx-max-width: Infinity; /* Allows them to fill the available space */
+    -fx-alignment: center; /* Centers text inside the button */
+}
+
+
+.playlist-button{
+    -fx-background-color: #DAD7CD;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, black, 5, 0, 2, 2);
+}
+
+/* Apply to all ScrollPanes */
+.scroll-pane {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+}
+
+/* Ensure the viewport (inner content) is also transparent */
+.scroll-pane .viewport {
+    -fx-background-color: transparent !important;
+}
+
+/* Completely Hide the Horizontal Scroll Bar */
+.scroll-pane .scroll-bar:horizontal {
+    -fx-pref-height: 0px;
+    -fx-max-height: 0px;
+    -fx-opacity: 0;
+    -fx-padding: 0;
+}
+
+/* Style the Vertical Scroll Bar */
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: #DAD7CD; /* Make scrollbar background transparent */
+}
+
+/* Customize the Vertical Scroll Bar Thumb */
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #A3C090; /* Themed scrollbar thumb */
+    -fx-background-radius: 5px;
+}
+
+/* Optional: Hide the vertical scrollbar track (background) */
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+/* Optional: Add hover effect to scrollbar thumb */
+.scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #6B8E23; /* Darker green on hover */
+}
+
+.AM_Logo {
+    -fx-background-radius: 50%; /* Makes it circular */
+    -fx-border-radius: 50%; /* Ensures the border follows the circle */
+    -fx-border-color: white; /* White border */
+    -fx-border-width: 3px; /* Medium border thickness */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.2, 2, 2); /* Cool shadow */
+    -fx-padding: 5px; /* Space around the image */
+}
+
+#RESET {
+    -fx-background-color: #A3C090; /* Default Blue Button */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 10px;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+#RESET:hover {
+    -fx-background-color: #28a745; /* Green background */
+    -fx-effect: dropshadow(three-pass-box, rgba(40, 167, 69, 0.8), 15, 0.3, 0, 0);
+}
+
+#RESET:pressed {
+    -fx-background-color: #218838; /* Darker Green */
+    -fx-effect: dropshadow(three-pass-box, rgba(40, 167, 69, 1), 20, 0.5, 0, 0);
+}
+
+

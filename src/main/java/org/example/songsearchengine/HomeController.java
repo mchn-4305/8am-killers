@@ -77,9 +77,11 @@ public class HomeController extends SceneController {
         ObservableList<Album> albumsList = FXCollections.observableArrayList();
 
         for (String album : albumsData) {
-            albumsList.add(new Album(album));
+            albumsList.add(new Album(null,album));
         }
 
         albumsTable.setItems(albumsList);
     }
+
+
 }
